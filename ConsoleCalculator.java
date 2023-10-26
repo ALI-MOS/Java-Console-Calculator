@@ -12,10 +12,9 @@ public class ConsoleCalculator {
          
         ArrayList<String> array = tokenize(input);
         printArray(array);
-            
+        System.out.println("Your Result is : "+solve(array));    
     } 
     
-
     public static boolean isDigit(char input){
         return input >= '0' && input <= '9' ;
      }
@@ -56,4 +55,20 @@ public class ConsoleCalculator {
             for (int i =0;i < array.size();i++){   
             System.out.println(array.get(i)); }
        }
+    public static int solve (ArrayList <String> array){      
+       int result = Integer.parseInt(array.get(0));  
+        for (int i=1 ;i< array.size();i=i+2){   
+            
+            if (array.get(i).equals("+")){
+                result = result + Integer.parseInt(array.get(i+1));
+            }if (array.get(i).equals("-")){
+                result = result - Integer.parseInt(array.get(i+1));
+            }if (array.get(i).equals("*")){
+                result = result * Integer.parseInt(array.get(i+1));
+            }if (array.get(i).equals("/")){
+                result = result / Integer.parseInt(array.get(i+1));                     
+            }            
+        }       
+      return result;
+    }
 }
