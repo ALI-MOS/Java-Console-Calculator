@@ -5,15 +5,21 @@ import java.util.ArrayList;
 public class ConsoleCalculator {
     
     public static void main(String[] args) {
-        System.out.println("Start");       
-          Scanner sc = new Scanner(System.in);
-          String input = sc.nextLine();     
-        System.out.println("Your input is : " + input);
-         
-        ArrayList<String> array = tokenize(input);
-        printArray(array);
-        System.out.println("Your Result is : "+solve(array));    
-    } 
+        
+        while (true) {                    
+            System.out.println("Start\n(Enter your Mathematical Equation) or (To exit press \"Q\")");       
+            Scanner sc = new Scanner(System.in);
+            String input = sc.nextLine();     
+            System.out.println("Your input is : " + input); 
+            
+            if (input.equalsIgnoreCase("q")||input.isEmpty()){
+                break;
+            }  
+            ArrayList<String> array = tokenize(input);
+            printArray(array);
+            System.out.println("Your Result is : "+solve(array));            
+        }       
+    }    
     
     public static boolean isDigit(char input){
         return input >= '0' && input <= '9' ;
