@@ -15,10 +15,15 @@ public class ConsoleCalculator {
             if (input.equalsIgnoreCase("q")){
                 break;
             }
-
-            ArrayList<String> array = tokenize(input);
-            int result = solve(array);
-            System.out.println(result);
+            
+            try {
+                ArrayList<String> array = tokenize(input);
+                int result = solve(array);
+                System.out.println(result);
+            }
+            catch (Exception e) {
+                System.out.println(e.getMessage());
+            }
         }
     }    
     
@@ -37,7 +42,7 @@ public class ConsoleCalculator {
         ); 
     }
     
-    public static ArrayList<String> tokenize(String equation){
+    public static ArrayList<String> tokenize(String equation) throws Exception {
         String currentNumber = "";
         ArrayList<String> tokens = new ArrayList<>();
         
@@ -57,6 +62,9 @@ public class ConsoleCalculator {
             else if (isDigit(c)){          
                 currentNumber += c;          
             }
+            else {
+                throw new Exception("Bad Input.");
+            }
         }
          
         if (!currentNumber.isEmpty()) {
@@ -72,18 +80,27 @@ public class ConsoleCalculator {
         }
     }
     
-    public static int solve(ArrayList<String> tokens){      
-        int result = Integer.parseInt(tokens.get(0));
+    public static int solve(ArrayList<String> tokens) throws Exception {
+        if (tokens.isEmpty()) {
+            throw new Exception("No input.");
+        }
+
+        int result;
+        try {
+            result = Integer.parseInt(tokens.get(0));
        
-        for (int i = 1; i < tokens.size(); i = i + 2){
-            switch (tokens.get(i)) {
-                case "+" -> result += Integer.parseInt(tokens.get(i+1));
-                case "-" -> result -= Integer.parseInt(tokens.get(i+1));
-                case "*" -> result *= Integer.parseInt(tokens.get(i+1));
-                case "/" -> result /= Integer.parseInt(tokens.get(i+1));
-                default -> {
+            for (int i = 1; i < tokens.size(); i = i + 2){
+                switch (tokens.get(i)) {
+                    case "+" -> result += Integer.parseInt(tokens.get(i+1));
+                    case "-" -> result -= Integer.parseInt(tokens.get(i+1));
+                    case "*" -> result *= Integer.parseInt(tokens.get(i+1));
+                    case "/" -> result /= Integer.parseInt(tokens.get(i+1));
+                    default -> {}
                 }
             }
+        } 
+        catch (NumberFormatException e){ 
+            throw new Exception ("Bad Input.");
         }
         
         return result;
