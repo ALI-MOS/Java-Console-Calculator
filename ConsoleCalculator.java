@@ -5,76 +5,87 @@ import java.util.ArrayList;
 public class ConsoleCalculator {
     
     public static void main(String[] args) {
-        
-        while (true) {                    
-            System.out.println("Start\n(Enter your Mathematical Equation) or (To exit press \"Q\")");       
-            Scanner sc = new Scanner(System.in);
-            String input = sc.nextLine();     
-            System.out.println("Your input is : " + input); 
-            
-            if (input.equalsIgnoreCase("q")||input.isEmpty()){
+        Scanner sc = new Scanner(System.in);
+        System.out.println("q to exit.");
+
+        while (true){                    
+            System.out.print("> ");     
+            String input = sc.nextLine();
+
+            if (input.equalsIgnoreCase("q")){
                 break;
-            }  
+            }
+
             ArrayList<String> array = tokenize(input);
-            printArray(array);
-            System.out.println("Your Result is : "+solve(array));            
-        }       
+            int result = solve(array);
+            System.out.println(result);
+        }
     }    
     
-    public static boolean isDigit(char input){
-        return input >= '0' && input <= '9' ;
-     }
-    public static boolean isOperator(char input){
-        return input == '+' ||input == '-'||input == '*'||input == '/'||input == '('||input == ')' ; 
-    } 
-    public static ArrayList<String> tokenize (String input){
+    public static boolean isDigit(char c){
+        return (c >= '0' && c <= '9');
+    }
+    
+    public static boolean isOperator(char c){
+        return (
+            c == '+'
+            || c == '-'
+            || c == '*'
+            || c == '/'
+            || c == '('
+            || c == ')'
+        ); 
+    }
+    
+    public static ArrayList<String> tokenize(String equation){
         String currentNumber = "";
-        ArrayList <String> array = new ArrayList<String>();
-         
-        for (int i=0; i<input.length();i++){
-         
-            if (input.charAt(i)== ' '){
-            continue;
+        ArrayList<String> tokens = new ArrayList<>();
+        
+        for (int i = 0; i < equation.length(); i++){
+            char c = equation.charAt(i);
+ 
+            if (c == ' ') {
+                
             } 
-            if (isOperator (input.charAt(i))){
-             
-                if (!currentNumber.equals("")){
-                    array.add(currentNumber);
+            else if (isOperator(c)){
+                if (!currentNumber.isEmpty()){
+                    tokens.add(currentNumber);
                     currentNumber = "";
                 }
-                array.add(Character.toString(input.charAt(i))); 
-            
-            }else if (isDigit(input.charAt(i))){          
-                currentNumber = currentNumber +input.charAt(i);
-            
-            }else if (currentNumber.equals("")) {
-                    array.add(currentNumber);
-                }
-             }
-         
-        if (!currentNumber.equals("")) {
-            array.add(currentNumber);
+                tokens.add(Character.toString(c));            
+            }
+            else if (isDigit(c)){          
+                currentNumber += c;          
+            }
         }
-        return array;
+         
+        if (!currentNumber.isEmpty()) {
+            tokens.add(currentNumber);
+        }
+ 
+        return tokens;
     } 
+    
     public static void printArray(ArrayList<String> array){
-            for (int i =0;i < array.size();i++){   
-            System.out.println(array.get(i)); }
-       }
-    public static int solve (ArrayList <String> array){      
-       int result = Integer.parseInt(array.get(0));  
-        for (int i=1 ;i< array.size();i=i+2){   
-            
-            if (array.get(i).equals("+")){
-                result = result + Integer.parseInt(array.get(i+1));
-            }if (array.get(i).equals("-")){
-                result = result - Integer.parseInt(array.get(i+1));
-            }if (array.get(i).equals("*")){
-                result = result * Integer.parseInt(array.get(i+1));
-            }if (array.get(i).equals("/")){
-                result = result / Integer.parseInt(array.get(i+1));                     
-            }            
-        }       
-      return result;
+        for (int i = 0; i < array.size(); i++) {   
+            System.out.println(array.get(i)); 
+        }
+    }
+    
+    public static int solve(ArrayList<String> tokens){      
+        int result = Integer.parseInt(tokens.get(0));
+       
+        for (int i = 1; i < tokens.size(); i = i + 2){
+            switch (tokens.get(i)) {
+                case "+" -> result += Integer.parseInt(tokens.get(i+1));
+                case "-" -> result -= Integer.parseInt(tokens.get(i+1));
+                case "*" -> result *= Integer.parseInt(tokens.get(i+1));
+                case "/" -> result /= Integer.parseInt(tokens.get(i+1));
+                default -> {
+                }
+            }
+        }
+        
+        return result;
     }
 }
