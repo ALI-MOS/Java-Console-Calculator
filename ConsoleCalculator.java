@@ -53,11 +53,16 @@ public class ConsoleCalculator {
                 
             } 
             else if (isOperator(c)){
-                if (!currentNumber.isEmpty()){
+                if(c == '-' && (i == 0 || isOperator(equation.charAt(i - 1)))){
+                    currentNumber += c;
+                    continue;
+                }
+ 
+                if(!currentNumber.isEmpty()){
                     tokens.add(currentNumber);
                     currentNumber = "";
                 }
-                tokens.add(Character.toString(c));            
+                tokens.add(Character.toString(c));
             }
             else if (isDigit(c)){          
                 currentNumber += c;          
@@ -85,16 +90,47 @@ public class ConsoleCalculator {
             throw new Exception("No input.");
         }
 
-        int result;
+        int result = 0;
         try {
-            result = Integer.parseInt(tokens.get(0));
+            
        
             for (int i = 1; i < tokens.size(); i = i + 2){
                 switch (tokens.get(i)) {
-                    case "+" -> result += Integer.parseInt(tokens.get(i+1));
-                    case "-" -> result -= Integer.parseInt(tokens.get(i+1));
-                    case "*" -> result *= Integer.parseInt(tokens.get(i+1));
-                    case "/" -> result /= Integer.parseInt(tokens.get(i+1));
+                    case "*" -> {
+                        result = Integer.parseInt(tokens.get(i-1)) * Integer.parseInt(tokens.get(i+1));
+                        tokens.remove(i+1);
+                        tokens.remove(i);
+                        tokens.set(i-1, Integer.toString(result));
+                        i = i - 2;
+                    }
+                    case "/" -> {
+                        result = Integer.parseInt(tokens.get(i-1)) / Integer.parseInt(tokens.get(i+1));
+                        tokens.remove(i+1);
+                        tokens.remove(i);
+                        tokens.set(i-1, Integer.toString(result));
+                        i = i - 2;
+                    }
+                    default -> {}
+                }
+            }
+            
+            for (int i = 1; i < tokens.size(); i = i + 2){
+                switch (tokens.get(i)) {
+                    case "+" -> {
+                        result = Integer.parseInt(tokens.get(i-1)) + Integer.parseInt(tokens.get(i+1));
+                        tokens.remove(i+1);
+                        tokens.remove(i);
+                        tokens.set(i-1, Integer.toString(result));
+                        i = i - 2;
+                    }
+                    case "-" -> {
+                        result = Integer.parseInt(tokens.get(i-1)) - Integer.parseInt(tokens.get(i+1));
+                        tokens.remove(i+1);
+                        tokens.remove(i);
+                        tokens.set(i-1, Integer.toString(result));
+                        i = i - 2;
+                    }
+                    
                     default -> {}
                 }
             }
@@ -103,6 +139,6 @@ public class ConsoleCalculator {
             throw new Exception ("Bad Input.");
         }
         
-        return result;
+        return Integer.parseInt(tokens.get(0));
     }
 }
