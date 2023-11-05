@@ -1,16 +1,9 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package com.mycompany.consolecalculator;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- *
- * @author Ali Mosa
- */
+
 public class Tokenizer {
     public static boolean isDigit(char c) {
         return (c >= '0' && c <= '9');

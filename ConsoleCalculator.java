@@ -4,9 +4,10 @@ import java.util.Scanner;
 import java.util.List;
 
 
-// TODO 
-// 2. 1/2 integer to double
 
+// TODO 
+
+// 2. 1/2 integer to double
 // 4. Validation
 
 
@@ -26,8 +27,11 @@ public class ConsoleCalculator {
             
             try {
                 List<String> tokens = Tokenizer.tokenize(input);
-                int result = Solver.solve(tokens);
-                System.out.println(result);
+                double result = Solver.solve(tokens);
+                if (result - (int) result == 0)
+                    System.out.println((int) result);
+                else
+                    System.out.println(result);
             }
             catch (Exception e) {
                 System.out.println(e.getMessage());
