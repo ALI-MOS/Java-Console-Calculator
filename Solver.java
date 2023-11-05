@@ -4,9 +4,9 @@ import java.util.List;
 
 
 public class Solver {
-    public static double solve(List<String> tokens) throws Exception {        
+    public static double solve(List<String> tokens) throws InvalidInputException {        
         if (tokens.isEmpty()) {
-            throw new Exception("No input.");
+            throw new InvalidInputException("No input.");
         }
 
         try {
@@ -16,13 +16,13 @@ public class Solver {
             solveForAddSub(tokens);
         } 
         catch (NumberFormatException e){ 
-            throw new Exception ("Bad Input.");
+            throw new InvalidInputException("Bad Input.");
         }
         
         return Double.parseDouble(tokens.get(0));
     }
     
-    private static void solveForParentheses(List<String> tokens) throws Exception {
+    private static void solveForParentheses(List<String> tokens) throws InvalidInputException {
         int counter = 0;
         int start = -1;
 
@@ -65,8 +65,10 @@ public class Solver {
     private static void solveForminus(List<String> tokens) {
         for (int i = 0; i < tokens.size(); i++) {
             if (tokens.get(i).equals("-") 
-                && (i == 0 || Tokenizer.isOperator(tokens.get(i - 1).charAt(0)))) {
-                if (tokens.get(i + 1).charAt(0) == '-')
+                && (i == 0 || isOperator(tokens.get(i - 1)))) {
+                if (tokens.get(i + 1).equals("-"))
+                    i -= reduce(tokens, i, 3, tokens.get(i + 2));
+                else if (tokens.get(i + 1).charAt(0) == '-')
                     i -= reduce(tokens, i, 2, tokens.get(i + 1).substring(1));
                 else 
                     i -= reduce(tokens, i, 2, tokens.get(i) + tokens.get(i + 1));
@@ -99,5 +101,16 @@ public class Solver {
         }
         
         return n - 1;
+    }
+    
+    public static boolean isOperator(String token) {
+        return (
+            token.equals("-")
+            || token.equals("+")
+            || token.equals("*")
+            || token.equals("/")
+            || token.equals("(")
+            || token.equals(")")
+        );
     }
 }

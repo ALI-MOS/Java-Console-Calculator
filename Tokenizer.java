@@ -20,7 +20,7 @@ public class Tokenizer {
         ); 
     }
     
-    public static List<String> tokenize(String equation) throws Exception {
+    public static List<String> tokenize(String equation) throws InvalidInputException {
         String currentNumber = "";
         List<String> tokens = new ArrayList<>();
         
@@ -41,7 +41,7 @@ public class Tokenizer {
                 currentNumber += c;          
             }
             else {
-                throw new Exception("Bad Input.");
+                throw new InvalidInputException("Bad Input.");
             }
         }
          

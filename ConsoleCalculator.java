@@ -7,8 +7,10 @@ import java.util.List;
 
 // TODO 
 
-// 2. 1/2 integer to double
-// 4. Validation
+// - Validation
+// - testing
+// - documentation
+// - exe
 
 
 public class ConsoleCalculator {
@@ -33,7 +35,7 @@ public class ConsoleCalculator {
                 else
                     System.out.println(result);
             }
-            catch (Exception e) {
+            catch (InvalidInputException e) {
                 System.out.println(e.getMessage());
             }
         }
