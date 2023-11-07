@@ -1,47 +1,39 @@
 package com.mycompany.consolecalculator;
 
+import static com.mycompany.consolecalculator.Utility.isOperator;
+import static com.mycompany.consolecalculator.Utility.isSeperator;
+import static java.lang.Character.isDigit;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Tokenizer {
-    public static boolean isDigit(char c) {
-        return (c >= '0' && c <= '9');
-    }
-    
-    public static boolean isOperator(char c) {
-        return (
-            c == '+'
-            || c == '-'
-            || c == '*'
-            || c == '/'
-            || c == '('
-            || c == ')'
-        ); 
-    }
-    
-    public static List<String> tokenize(String equation) throws InvalidInputException {
+    /**
+     * 
+     * @param equation
+     * @return
+     */
+    public static List<String> tokenize(String equation) {
         String currentNumber = "";
         List<String> tokens = new ArrayList<>();
-        
+        /**
+         * this loop check for:
+         * 1->is the first index is empty
+         *  a->is it operator add var current number the make it equal to ""
+         * 2->is it digit
+         */
         for (int i = 0; i < equation.length(); i++){
             char c = equation.charAt(i);
  
-            if (c == ' ') {
-                
-            } 
-            else if (isOperator(c)){
-                if(!currentNumber.isEmpty()){
+            if (isSeperator(c)) {
+                if (!currentNumber.isEmpty()){
                     tokens.add(currentNumber);
                     currentNumber = "";
                 }
-                tokens.add(Character.toString(c));
+                if (isOperator(c))
+                    tokens.add(Character.toString(c));
             }
             else if (isDigit(c)){          
                 currentNumber += c;          
-            }
-            else {
-                throw new InvalidInputException("Bad Input.");
             }
         }
          

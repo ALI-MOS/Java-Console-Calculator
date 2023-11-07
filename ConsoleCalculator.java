@@ -1,5 +1,7 @@
 package com.mycompany.consolecalculator;
 
+import static com.mycompany.consolecalculator.Validator.checkValidChars;
+import static com.mycompany.consolecalculator.Validator.validate;
 import java.util.Scanner;
 import java.util.List;
 
@@ -7,11 +9,13 @@ import java.util.List;
 
 // TODO 
 
-// - Validation
-// - testing
 // - documentation
 // - exe
 
+/**
+ * 
+ * @author Ali Mosa
+ */
 
 public class ConsoleCalculator {
     
@@ -27,23 +31,26 @@ public class ConsoleCalculator {
                 break;
             }
             
-            try {
-                List<String> tokens = Tokenizer.tokenize(input);
-                double result = Solver.solve(tokens);
-                if (result - (int) result == 0)
-                    System.out.println((int) result);
-                else
-                    System.out.println(result);
+
+            boolean validString = checkValidChars(input);
+            if (!validString) {
+                System.out.println("Invalid Characters in Input.");
+                continue;
             }
-            catch (InvalidInputException e) {
-                System.out.println(e.getMessage());
+            List<String> tokens = Tokenizer.tokenize(input);
+
+            boolean validEquation = validate(tokens);
+            if (!validEquation) {
+                System.out.println("Invalid Equation Structure.");
+                continue;
             }
+            double result = Solver.solve(tokens);
+
+            if (result - (int) result == 0)
+                System.out.println((int) result);
+            else
+                System.out.println(result);
+            }
+
         }
-    }    
-    
-    public static void printArray(List<String> array){
-        for (int i = 0; i < array.size(); i++) {   
-            System.out.println(array.get(i)); 
-        }
-    } 
 }
