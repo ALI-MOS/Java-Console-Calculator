@@ -8,11 +8,11 @@ import java.util.List;
  * @author Ali Mosa
  */
 public class Solver {
-    /***
-     * Solve the tokens array for (Parentheses,minus,mult,div,add and sub)
-     * @param tokens array of tokens (Strings) from Tokenizer class
+    /**
+     * Solve the tokens array for (Parentheses,minus,multiplication,
+     * division,addition and subtraction)
+     * @param tokens array list of tokens (Strings)
      * @return one result in form of double
-     * @throws InvalidInputException 
      */
     public static double solve(List<String> tokens){        
         solveForParentheses(tokens);
@@ -24,12 +24,15 @@ public class Solver {
     }
     /**
      * Solve the tokens array for (Parentheses) and reduce it to one result 
-     * @param tokens:  tokens array of tokens from Tokenizer class
+     * @param tokens:  tokens array of tokens
      */
     private static void solveForParentheses(List<String> tokens) {
         int counter = 0;
         int start = -1;
-
+        //loop to check for opeining and closeing parentheses
+        //if the counter = 0  e.g (1+1)
+        //then solve the equation inside parentheses 
+        //and delete the equation with parentheses and replace it with result
         for (int i = 0; i < tokens.size(); i++) {
             if (tokens.get(i).equals("(")) {
                 counter++;
@@ -48,8 +51,9 @@ public class Solver {
         }
     }
     /**
-     * solve the tokens array for (multiplication and division) and reduce it to one result
-     * @param tokens:  kens array of tokens from Tokenizer class
+     * solve the tokens array for (multiplication and division) 
+     * and reduce it to one result
+     * @param tokens
      */
     private static void solveForMultDiv(List<String> tokens) {
         for (int i = 1; i < tokens.size(); i = i + 2){
@@ -70,7 +74,8 @@ public class Solver {
     }
     /***
      * solve the tokens array for (minus) and reduce it to one result
-     * @param tokens: tokens array of tokens from Tokenizer class
+     * it check for minus sign in the beginning or after operator
+     * @param tokens
      */
     private static void solveForminus(List<String> tokens) {
         for (int i = 0; i < tokens.size(); i++) {
@@ -88,8 +93,9 @@ public class Solver {
         }
     }
     /**
-     * solve the tokens array for (addition and subtraction) and reduce it to one result
-     * @param tokens:  tokens array of tokens from Tokenizer class
+     * solve the tokens array for (addition and subtraction) 
+     * and reduce it to one result
+     * @param tokens
      */
     private static void solveForAddSub(List<String> tokens) {
         for (int i = 1; i < tokens.size(); i = i + 2){
@@ -107,14 +113,13 @@ public class Solver {
         }
     }
     /**
-     * 
-     * @param tokens: tokens array of tokens from Tokenizer class
+     * reduce reduces n places by 1 result (e.g. [1 + 2] -> [3])
+     * @param tokens: array of tokens
      * @param position: the index of array tokens
      * @param n: number of steps in the index
      * @param replacement: the replacement of value in the index of tokens
      * @return number of elements deleted
      */
-    // reduce reduces n places by 1 result (e.g. [1 + 2] -> [3])
     private static double reduce(List<String> tokens, int position, int n, String replacement) {
         // replace first element with given value
         tokens.set(position, replacement);

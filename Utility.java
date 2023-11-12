@@ -9,15 +9,18 @@ import java.util.List;
 public class Utility {
     public static String[] operators = {"-", "+", "*", "/", ")", "("};
     /**
-     * 
+     * check if c is digit from 0 to 9
      * @param c
-     * @return true or false
-     * Check for Digit 0 -> 9
+     * @return 
      */
     public static boolean isDigit(char c) {
         return (c >= '0' && c <= '9');
     }
-    
+    /**
+     * loop to check number in string
+     * @param s
+     * @return 
+     */
     public static boolean isNumber(String s) {
         for (int i = 0; i < s.length(); i++) {
             if (!isDigit(s.charAt(i)))
@@ -27,34 +30,39 @@ public class Utility {
     }
     
     /**
-     * 
+     * check the character c is operator
      * @param c
-     * @return true or false 
-     * Check for operator
+     * @return 
      */
     public static boolean isOperator(char c) {
         return isOperator(Character.toString(c)); 
     }
-    
     /**
-     * checking if it is operator 
-     * @param token: tokens array of tokens from Tokenizer class
+     * check the string token is in the operator array
+     * @param token
      * @return 
      */
     public static boolean isOperator(String token) {
         return Arrays.asList(operators).contains(token);
     }
-    
+    /**
+     * check if char c is space or tap
+     * @param c
+     * @return 
+     */
     public static boolean isSpace(char c) {
         return c == ' ' || c == '\t';
     }
-    
+    /**
+     * check if char c is space or operator 
+     * @param c
+     * @return 
+     */
     public static boolean isSeperator(char c) {
         return isOperator(c) || isSpace(c);
     }
-    
     /**
-     *
+     * method to print the elements of the array
      * @param array 
      */
     public static void printArray(List<String> array){

@@ -8,18 +8,22 @@ import java.util.List;
 
 public class Tokenizer {
     /**
-     * 
+     * split the equation into numbers and operators
      * @param equation
-     * @return
+     * @return tokens array list
      */
     public static List<String> tokenize(String equation) {
         String currentNumber = "";
         List<String> tokens = new ArrayList<>();
         /**
          * this loop check for:
-         * 1->is the first index is empty
-         *  a->is it operator add var current number the make it equal to ""
-         * 2->is it digit
+         * ->if the variable current number is not empty 
+         *      add it's value to the tokens array
+         * ->if variable current number is operator 
+         *      add it's value to the tokens array
+         *      then make the variable equal to ""
+         * ->if variable current number is Digit
+         *      add it's value to the tokens array
          */
         for (int i = 0; i < equation.length(); i++){
             char c = equation.charAt(i);
@@ -36,7 +40,10 @@ public class Tokenizer {
                 currentNumber += c;          
             }
         }
-         
+        /**
+         * if variable current number is not Empty
+         *      add it's value to the tokens array
+         */ 
         if (!currentNumber.isEmpty()) {
             tokens.add(currentNumber);
         }

@@ -11,6 +11,12 @@ import java.util.List;
  * @author Ali Mosa
  */
 public class Validator {
+    /**
+     * checking if the string input is valid by 
+     *      checking (isDigit, isOperator and isSpace)
+     * @param equation: input string
+     * @return 
+     */
     public static boolean checkValidChars(String equation) {
         for (int i = 0; i < equation.length(); i++) {
             char c = equation.charAt(i);
@@ -23,11 +29,19 @@ public class Validator {
         }
         return true;
     }
-    
+    /**
+     * it is validate if check parentheses and check structure are true
+     * @param tokens
+     * @return 
+     */
     public static boolean validate(List<String> tokens) {
         return checkParentheses(tokens) && checkStructure(tokens);
     }
-    
+    /**
+     * check the existing of parentheses in tokens array 
+     * @param tokens array of strings
+     * @return 
+     */
     public static boolean checkParentheses(List<String> tokens) {
         int counter = 0;
         for (int i = 0; i < tokens.size(); i++) {
@@ -43,7 +57,13 @@ public class Validator {
         }
         return (counter == 0);
     }
-    
+    /**
+     * check the structure of the tokens(is not empty)and 
+     * (the start of tokens is ( "-" || "(" || "-" ) 
+     * and there are no 2 operators or 2 numbers after each other
+     * @param tokens
+     * @return 
+     */
     public static boolean checkStructure(List<String> tokens) {
         if (tokens.isEmpty())
             return false;
